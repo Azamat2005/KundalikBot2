@@ -1,7 +1,6 @@
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 
 # ---Main menu ----
-alert = KeyboardButton("Bot xozir ish foliyatida emas \n Hozircha 11-B ishlayapti")
 Sinf11A = KeyboardButton('11-A Sinf')
 Sinf11B = KeyboardButton('11-B Sinf')
 Sinf10A = KeyboardButton("10-A Sinf")
@@ -26,9 +25,6 @@ Sinf1A = KeyboardButton('1-A Sinf')
 Sinf1B = KeyboardButton("1-B Sinf")
 
 MainMarkup = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2).add(
-    alert
-    )
-MainMarkup.add(
     Sinf11A,Sinf11B,Sinf10A, Sinf10B,
     Sinf9A,Sinf9B, Sinf8A,Sinf8B,
     Sinf7A, Sinf7B,Sinf6A,Sinf6B,
@@ -56,4 +52,15 @@ HaftaKunlari = ReplyKeyboardMarkup(resize_keyboard=True).add(
     Payshanba,Juma,Shanba,
     Orqaga,
     row_width=2
+)
+
+
+#----- Admin panel ---- 
+
+AllUser = KeyboardButton("All User")
+ChooseUser = KeyboardButton("Choose User")
+
+Admin = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1).add(
+    AllUser,
+    ChooseUser
 )

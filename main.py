@@ -1,3 +1,5 @@
+from email import message
+from re import M
 import sqlite3
 import os
 from dotenv import load_dotenv
@@ -10,6 +12,7 @@ import functions.ChangeCurrentSinf as ChangeCurrentSinf
 import functions.GetCurrentSinf as GetCurrentSinf
 import functions.GetTable as GetTable
 import datetime
+import functions.UserGet as UserGet
 
 load_dotenv()
 TOKENBOT = os.getenv("Token")
@@ -18,7 +21,7 @@ bot = telebot.TeleBot(TOKENBOT)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    ism = message.from_user.username
+    ism = message.from_user.first_name
     userId = message.from_user.id
 
 
@@ -28,20 +31,17 @@ def start(message):
     
     
 
-@bot.channel_post_handler(commands=['text'])
-def channel(message):
-    bot.get_chat(message.chat.id)
-        
-
 @bot.message_handler(content_types=['text'])
 def Sinflar(message):
     
-
-    now = datetime.datetime.now()
-    nowDate = f"year:{now.year} month:{now.month}, day:{now.day} hour:{now.hour}, minute:{now.minute} "
-    username = message.from_user.username
-    id = message.from_user.id
-    chats = message.text
+    try:
+        now = datetime.datetime.now()
+        nowDate = f"year:{now.year} month:{now.month}, day:{now.day} hour:{now.hour}, minute:{now.minute} "
+        username = message.from_user.username
+        id = message.from_user.id
+        chats = message.text
+    except:
+        pass
 
     SinfLar = SinfList.Sinflar()
     for Sinf in SinfLar:
@@ -78,6 +78,38 @@ def Sinflar(message):
 
     conn.commit()
     conn.close()
+
+
+    if message.text == "Send Chat":
+        bot.send_message(chat_id=message.chat.id, text="Enter password")
+        bot.register_next_step_handler(message=message, callback=pasww)
+
+def pasww(message):
+    if message.text == "Azamat20050308":
+        bot.send_message(chat_id=message.chat.id, text="Correct", reply_markup=markups.Admin)
+        bot.register_next_step_handler(message=message, callback=ChooseOptions)
+
+def ChooseOptions(message):
+    if message.text == "All User":
+        bot.send_message(chat_id=message.chat.id, text="Chatni boshlang: ")
+        bot.register_next_step_handler(message=message, callback=AllUserChat)
+    if message.text == "Choose User":
+        pass
+
+
+def AllUserChat(message):
+    users = UserGet.sendUser()
+
+    for user in users:
+        try:
+            bot.send_message(chat_id = int(user['id']), text=message.text)
+        except:
+            print("Xato")
+            
+   
+
+    
+    bot.register_next_step_handler(message=message, callback=ChooseOptions) 
 
 def CheckSendPassword(message):
 
