@@ -54,11 +54,13 @@ def Sinflar(message):
     days = KunList.Kunlar()
     for day in days:
         if day == message.text:
-            CurSinf = GetCurrentSinf.getCurrentSinf(message.chat.id)
-            msg = GetTable.Jadval(CurSinf, day)
-            
-            bot.send_message(chat_id=message.chat.id, text=msg)
-
+            try:
+                CurSinf = GetCurrentSinf.getCurrentSinf(message.chat.id)
+                msg = GetTable.Jadval(CurSinf, day)
+                
+                bot.send_message(chat_id=message.chat.id, text=msg)
+            except:
+                pass
     if message.text == "Update database":
         bot.send_message(chat_id=message.chat.id, text='Enter Password')
         bot.register_next_step_handler(message=message, callback=CheckPassword)

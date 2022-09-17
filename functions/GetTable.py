@@ -26,4 +26,5 @@ def Jadval(Sinf, Kun):
     conn.commit()
     conn.close()
 
-    return msg
+    if msg:
+        return msg
