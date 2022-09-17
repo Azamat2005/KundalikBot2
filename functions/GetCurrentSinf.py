@@ -1,3 +1,4 @@
+from math import sin
 import sqlite3
 
 def getCurrentSinf(id):
@@ -15,5 +16,8 @@ def getCurrentSinf(id):
     conn.commit()
     conn.close()
 
-
-    return sinf[0]
+    try:
+        if sinf:
+            return sinf[0]
+    except:
+        pass

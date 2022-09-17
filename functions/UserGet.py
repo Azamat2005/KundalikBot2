@@ -19,5 +19,6 @@ def sendUser():
         return ll
     except:
         print("Xato Userda")
+        
     conn.commit()
     conn.close()

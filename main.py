@@ -1,5 +1,3 @@
-from email import message
-from re import M
 import sqlite3
 import os
 from dotenv import load_dotenv
